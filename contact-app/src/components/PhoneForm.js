@@ -16,10 +16,23 @@ class PhoneForm extends Component {
         });
     }
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.myOnCreate(this.state);
+        // this.props.myOnCreate({
+        //     name: this.state.name,
+        //     phone: this.state.phone,
+        // });
+        this.setState({
+            name: '',
+            phone: '',
+        })
+    }
+
     render() {
         return (
             //단일 태그로 감싸주어야 함. form이던 div던 상관없이.
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 {/* input이 여러개 일 때에는 name값을 지정해서 handleChange 값을 변경한다. */}
                 <input 
                     placeholder="이름" 
@@ -34,6 +47,8 @@ class PhoneForm extends Component {
                     onChange={this.handleChange}
                     value={this.state.phone}
                 />
+                <br />
+                <button type="submit">등록</button>
                 <br />
                 <br />
                 <br />
