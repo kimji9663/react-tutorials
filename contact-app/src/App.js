@@ -7,10 +7,10 @@ class App extends Component {
   id = 0;
 
   state = {
-    information: [],
+    information: [], //name, phone
   }
 
-  handleCreate = (data) => { //data = this.state
+  handleCreate = (data) => {
     const { information } = this.state;
     this.setState({
       information: information.concat({
@@ -18,7 +18,15 @@ class App extends Component {
         id: this.id++
       })
     });
-    //console.log(data);
+    console.log(information); //name, phone 원래 값
+    console.log(data); //name, phone 새로운 값
+  }
+
+  handleRemove = (id) => {
+    const { information } = this.state;
+    this.setState({
+      information: information.filter(info => info.id !== id)
+    });
   }
   
   render() {
@@ -26,7 +34,8 @@ class App extends Component {
       <div>
         <PhoneForm onCreate={this.handleCreate}></PhoneForm>
         <PhoneInfoList 
-          data={this.state.information}
+          data={this.state.information} //name, phone
+          onRemove={this.handleRemove}
         />
       </div>
     );
