@@ -28,6 +28,23 @@ class App extends Component {
       information: information.filter(info => info.id !== id)
     });
   }
+
+  handleUpdate = (id, data) => {
+    const { information } = this.state;
+    this.setState({
+      information: information.map(
+        info => {
+          if (info.id === id) {
+            return {
+              id,
+              ...data, //name: data.name, phone: data.phone,
+            }
+          }
+          return info;
+        }
+      )
+    })
+  }
   
   render() {
     return (
@@ -36,6 +53,7 @@ class App extends Component {
         <PhoneInfoList 
           data={this.state.information} //name, phone
           onRemove={this.handleRemove}
+          onUpdate={this.handleUpdate}
         />
       </div>
     );
