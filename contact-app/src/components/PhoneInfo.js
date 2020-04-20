@@ -9,26 +9,32 @@ class PhoneInfo extends Component {
     }
 
     handleRemove = () => {
-        const { info, onRemove} = this.props;
+        const { info, onRemove } = this.props;
         onRemove(info.id);
     }
 
-    //현재 값을 반전시킨다. true <-> false
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state !== nextState) {
+            return true;
+        }
+        return this.props.info !== nextProps.info;
+    }
+    
     handleToggleEdit = () => {
-        const { info, onUpdate } = this.props;
-        if (this.state.editing) {
+        const { info, onUpdate } = this.props; //onUpdate = handleUpdate (App.js)
+        if (this.state.editing) { //editing모드일 때 : 새 값으로 업데이트
             onUpdate(info.id, {
                 name: this.state.name,
-                phone: this.state.phone
-            });
+                phone: this.state.phone //handleUpdate(id, data)
+            }); 
         } else {
             this.setState({
-                name: info.name,
+                name: info.name, //아닐 때 : 기존 값 넣어주기
                 phone: info.phone
             });
         }
         this.setState({
-            editing: !this.state.editing,
+            editing: !this.state.editing, //현재 값을 반전시킨다. true <-> false
         })
     }
 
@@ -47,6 +53,8 @@ class PhoneInfo extends Component {
             padding: '8px',
             margin: '8px',
         };
+
+        console.log(name);
 
         return (
             <div style={style}>

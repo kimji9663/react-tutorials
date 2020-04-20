@@ -11,6 +11,8 @@ class PhoneInfoList extends Component {
 
         //if (!data) return null; //만약 data 값이 없으면 중단
 
+        console.log('rendering list');
+        
         const list = data.map(
             info => (<PhoneInfo onRemove={onRemove} onUpdate={onUpdate} info={info} key={info.id} />)
         );
