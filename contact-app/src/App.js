@@ -24,11 +24,17 @@ class App extends Component {
         phone: '010-0000-0003'
       }
     ], //name, phone
+    keyword: '',
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      keyword: e.target.value,
+    })
   }
 
   handleCreate = (data) => {
     const { information } = this.state;
-    this.
     this.setState({
       information: information.concat({
         ...data,
@@ -67,8 +73,11 @@ class App extends Component {
     return (
       <div>
         <PhoneForm onCreate={this.handleCreate}></PhoneForm>
+        <input onChange={this.handleChange} value={this.state.keyword} placeholder="검색..." />
         <PhoneInfoList 
-          data={this.state.information} //name, phone
+          data={this.state.information.filter(
+            info => info.name.indexOf(this.state.keyword) > -1 //indexOf: 주어진 값과 일치하는 값의 인덱스를 반환
+          )} //name, phone
           onRemove={this.handleRemove}
           onUpdate={this.handleUpdate}
         />
